@@ -72,8 +72,8 @@ char_image = pygame.transform.scale(char_image, (CHAR_WIDTH, CHAR_HEIGHT)).conve
 
 
 #Audio
-pygame.mixer.music.load('in_game.mp3')
-pygame.mixer.music.play(loops=-1, start=0.0)
+#pygame.mixer.music.load('in_game.mp3')
+#pygame.mixer.music.play(loops=-1, start=0.0)
 
 #Motion functions
 def left(x, vel):
@@ -138,11 +138,13 @@ def detectCollide(x, y, width, height, color1, color2 = None, color3 = None):
 
 def screenWrap(screenNum, x, y, width, height):
     if x <= 5:
+        screenNum = screenChange(screenNum, x, y, width, height)
         x = WIDTH-width-5
     if y <= 5:
         screenNum = screenChange(screenNum, x, y, width, height)
         y = HEIGHT-height-5
     if x >= WIDTH-width-1:
+        screenNum = screenChange(screenNum, x, y, width, height)
         x = 10
     if y >= HEIGHT - height-1:
         screenNum = screenChange(screenNum, x, y, width, height)
@@ -387,21 +389,217 @@ def displayScreen(screenNum):
         topDoor()
         char1.move()
         char1.draw(screen)
-
+    message_display(str(screenNum), 200, 200)
         
 def screenChange(screenNum, x, y, width, height):
     if screenNum == 1:
         screenNum = 2
     elif screenNum == 2:
+        if x <= 5:
+            screenNum = 16
         if y <= 5:
             screenNum = 3
-        elif y >= HEIGHT - height-1:
+        if x >= WIDTH-width-1:
+            pass
+        if y >= HEIGHT - height-1:
             screenNum = 1
     elif screenNum == 3:
+        if x <= 5:
+            pass
+        if y <= 5:
+            pass
+        if x >= WIDTH-width-1:
+            screenNum = 17
         if y >= HEIGHT - height-1:
             screenNum = 2
     elif screenNum == 4:
-        pass
+        if x <= 5:
+            pass
+        if y <= 5:
+            screenNum = 5
+        if x >= WIDTH-width-1:
+            screenNum = 16
+        if y >= HEIGHT - height-1:
+            pass
+    elif screenNum == 5:
+        if x <= 5:
+            pass
+        if y <= 5:
+            screenNum = 6
+        if x >= WIDTH-width-1:
+            pass
+        if y >= HEIGHT - height-1:
+            screenNum = 4
+    elif screenNum == 6:
+        if x <= 5:
+            pass
+        if y <= 5:
+            pass
+        if x >= WIDTH-width-1:
+            screenNum = 7
+        if y >= HEIGHT - height-1:
+            screenNum = 5
+    elif screenNum == 7:
+        if x <= 5:
+            screenNum = 6
+        if y <= 5:
+            screenNum = 8
+        if x >= WIDTH-width-1:
+            pass
+        if y >= HEIGHT - height-1:
+            pass
+    elif screenNum == 8:
+        if x <= 5:
+            pass
+        if y <= 5:
+            screenNum = 9
+        if x >= WIDTH-width-1:
+            screenNum = 26
+        if y >= HEIGHT - height-1:
+            screenNum = 7
+    elif screenNum == 9:
+        if x <= 5:
+            screenNum = 10
+        if y <= 5:
+            pass
+        if x >= WIDTH-width-1:
+            pass
+        if y >= HEIGHT - height-1:
+            screenNum = 8
+    elif screenNum == 10:
+        if x <= 5:
+            pass
+        if y <= 5:
+            screenNum = 11
+        if x >= WIDTH-width-1:
+            screenNum = 9
+        if y >= HEIGHT - height-1:
+            pass
+    elif screenNum == 11:
+        if x <= 5:
+            pass
+        if y <= 5:
+            pass
+        if x >= WIDTH-width-1:
+            screenNum = 12
+        if y >= HEIGHT - height-1:
+            screenNum = 10
+    elif screenNum == 12:
+        if x <= 5:
+            screenNum = 11
+        if y <= 5:
+            pass
+        if x >= WIDTH-width-1:
+            screenNum = 13
+        if y >= HEIGHT - height-1:
+            pass
+    elif screenNum == 13:
+        if x <= 5:
+            screenNum = 12
+        if y <= 5:
+            screenNum = 15
+        if x >= WIDTH-width-1:
+            screenNum = 14
+        if y >= HEIGHT - height-1:
+            pass
+    elif screenNum == 14:
+        screenNum = 13
+    elif screenNum == 15:
+        screenNum = 13
+    elif screenNum == 16:
+        if x <= 5:
+            screenNum = 4
+        if y <= 5:
+            pass
+        if x >= WIDTH-width-1:
+            screenNum = 2
+        if y >= HEIGHT - height-1:
+            pass
+    elif screenNum == 17:
+        if x <= 5:
+            screenNum = 3
+        if y <= 5:
+            screenNum = 27
+        if x >= WIDTH-width-1:
+            screenNum = 18
+        if y >= HEIGHT - height-1:
+            pass
+    elif screenNum == 18:
+        if x <= 5:
+            screenNum = 17
+        if y <= 5:
+            pass
+        if x >= WIDTH-width-1:
+            screenNum = 20
+        if y >= HEIGHT - height-1:
+            screenNum = 19
+    elif screenNum == 19:
+        screenNum = 18
+    elif screenNum == 20:
+        if x <= 5:
+            screenNum = 18
+        if y <= 5:
+            screenNum = 21
+        if x >= WIDTH-width-1:
+            pass
+        if y >= HEIGHT - height-1:
+            pass
+    elif screenNum == 21:
+        if x <= 5:
+            pass
+        if y <= 5:
+            screenNum = 22
+        if x >= WIDTH-width-1:
+            pass
+        if y >= HEIGHT - height-1:
+            screenNum = 20
+    elif screenNum == 22:
+        if x <= 5:
+            screenNum = 23
+        if y <= 5:
+            pass
+        if x >= WIDTH-width-1:
+            pass
+        if y >= HEIGHT - height-1:
+            screenNum = 21
+    elif screenNum == 23:
+        if x <= 5:
+            screenNum = 25
+        if y <= 5:
+            screenNum = 24
+        if x >= WIDTH-width-1:
+            screenNum = 22
+        if y >= HEIGHT - height-1:
+            pass
+    elif screenNum == 24:
+        screenNum = 23
+    elif screenNum == 25:
+        if x <= 5:
+            screenNum = 26
+        if y <= 5:
+            pass
+        if x >= WIDTH-width-1:
+            screenNum = 23
+        if y >= HEIGHT - height-1:
+            screenNum = 27
+    elif screenNum == 26:
+        if x <= 5:
+            screenNum = 8
+        if y <= 5:
+            pass
+        if x >= WIDTH-width-1:
+            screenNum = 25
+        if y >= HEIGHT - height-1:
+            pass
+    elif screenNum == 27:
+        if x <= 5:
+            pass
+        if y <= 5:
+            screenNum = 25
+        if x >= WIDTH-width-1:
+            pass
+        if y >= HEIGHT - height-1:
+            screenNum = 17
     return screenNum
 
 
