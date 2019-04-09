@@ -18,6 +18,14 @@ CHAR_WIDTH = 60
 CHAR_HEIGHT = 60
 CHAR_VEL = 1
 
+#Monster Stuff
+MONS_X = 50
+MONS_Y = 50
+MONS_VEL = 1
+MONS_WIDTH = 40
+MONS_HEIGHT = 40
+MOVE_1 = True
+
 #Door Stuff
 DOOR_WIDTH = 200
 DOOR_HEIGHT = 160
@@ -46,7 +54,7 @@ def message_display(text, centerx, centery):
     screen.blit(TextSurf, TextRect)
 
 #Other Variables
-SCREEN_NUM = 1
+SCREEN_NUM = 0
 BORDER_X = 40
 BORDER_Y = 40
 
@@ -63,17 +71,23 @@ RED = (160, 20, 20, 2)
 floor = pygame.image.load('dungeon_floor.jpg')
 floor = pygame.transform.scale(floor, (WIDTH-BORDER_X*2, HEIGHT-BORDER_Y*2)).convert()
 wall = pygame.image.load('dungeon_wall.png')
+pillar = pygame.transform.scale(wall, (75, 75)).convert_alpha()
 wall = pygame.transform.scale(wall, (WIDTH, HEIGHT)).convert()
 door = pygame.image.load('door.png')
 doorVert = pygame.transform.scale(door, (DOOR_WIDTH,DOOR_HEIGHT)).convert_alpha()
 doorHori = pygame.transform.rotate(doorVert, 90).convert_alpha()
 char_image = pygame.image.load('character.png').convert_alpha()
 char_image = pygame.transform.scale(char_image, (CHAR_WIDTH, CHAR_HEIGHT)).convert_alpha()
+mother = pygame.image.load('mother.png').convert_alpha()
+mother = pygame.transform.scale(mother, (300, 300)).convert_alpha()
+mons_image = pygame.image.load('octopus.png')
+mons_image = pygame.transform.scale(mons_image, (MONS_WIDTH, MONS_HEIGHT)).convert_alpha()
 
 
 #Audio
-#pygame.mixer.music.load('in_game.mp3')
-#pygame.mixer.music.play(loops=-1, start=0.0)
+IN_GAME = False
+pygame.mixer.music.load('intro_music.mp3')
+pygame.mixer.music.play(loops=-1, start=0.0)
 
 #Motion functions
 def left(x, vel):
@@ -180,6 +194,44 @@ class Character(pygame.sprite.Sprite):
 
 char1 = Character(CHAR_WIDTH, CHAR_HEIGHT, CHAR_X, CHAR_Y, CHAR_VEL, char_image)
 
+class Monster(pygame.sprite.Sprite):
+    def __init__(self, x, y, width, height, vel, image):
+        super(Monster, self).__init__()
+        self.width = width
+        self.height = height
+        self.x = x
+        self.y = y
+        self.vel = vel
+        self.image = image
+        self.alive = True
+    def draw(self, screen):
+        if self.alive:
+            screen.blit(self.image, (self.x, self.y))
+    def move(self):
+        global MOVE_1
+        if MOVE_1 == True:
+            if self.x < char1.x:
+                self.x = right(self.x, self.vel)
+                if detectCollide(self.x,self.y,self.width,self.height,BORDER_COLOR1,BORDER_COLOR2,BORDER_COLOR3):
+                    self.x = left(self.x,self.vel)
+            else:
+                self.x = left(self.x, self.vel)
+                if detectCollide(self.x,self.y,self.width,self.height,BORDER_COLOR1,BORDER_COLOR2,BORDER_COLOR3):
+                    self.x = right(self.x,self.vel)
+            if self.y < char1.y:
+                self.y = down(self.y, self.vel)
+                if detectCollide(self.x,self.y,self.width,self.height,BORDER_COLOR1,BORDER_COLOR2,BORDER_COLOR3):
+                    self.x = up(self.x,self.vel)
+            else:
+                self.y = up(self.y, self.vel)
+                if detectCollide(self.x,self.y,self.width,self.height,BORDER_COLOR1,BORDER_COLOR2,BORDER_COLOR3):
+                    self.x = down(self.x,self.vel)
+            MOVE_1 = False
+        else:
+            MOVE_1 = True
+            
+mons1 = Monster(MONS_X, MONS_Y, MONS_WIDTH, MONS_HEIGHT, MONS_VEL, mons_image)
+
 #Door Stuff
 def topDoor():
     screen.blit(doorVert, TOP_DOOR)
@@ -195,6 +247,18 @@ def rightDoor():
 
 #Screen Display Stuff
 def displayScreen(screenNum):
+    if screenNum == 0:
+        screen.blit(mother, (150, 300))
+        message_display('Your mother has fallen grievously ill.', WIDTH/2, 30)
+        message_display('Everything the doctors do does not help.', WIDTH/2, 80)
+        message_display('You have tried everything: natural healing,', WIDTH/2, 130)
+        message_display('chemical therapy, and even superstition.', WIDTH/2, 180)
+        message_display('Nothing helps...', WIDTH/2, 230)
+        message_display('Press space to continue.', WIDTH/2, 280)
+        keys = pygame.key.get_pressed()
+        global SCREEN_NUM
+        if keys[pygame.K_SPACE]:
+            SCREEN_NUM = 1
     if screenNum == 1:
         screen.blit (wall, (0,0))
         screen.blit (floor, (BORDER_Y, BORDER_X))
@@ -204,6 +268,11 @@ def displayScreen(screenNum):
         message_display('Use WASD or', 150, 60)
         message_display('arrow keys to', 150, 90)
         message_display('move', 150, 120)
+        global IN_GAME
+        if IN_GAME == False:
+            IN_GAME = True
+            pygame.mixer.music.load('in_game.mp3')
+            pygame.mixer.music.play(loops=-1, start=0.0)
     if screenNum == 2:
         screen.blit (wall, (0,0))
         screen.blit (floor, (BORDER_Y, BORDER_X))
@@ -211,7 +280,10 @@ def displayScreen(screenNum):
         botDoor()
         leftDoor()
         char1.move()
+        mons1.move()
         char1.draw(screen)
+        mons1.draw(screen)
+        
     if screenNum == 3:
         screen.blit (wall, (0,0))
         screen.blit (floor, (BORDER_Y, BORDER_X))
@@ -389,7 +461,6 @@ def displayScreen(screenNum):
         topDoor()
         char1.move()
         char1.draw(screen)
-    message_display(str(screenNum), 200, 200)
         
 def screenChange(screenNum, x, y, width, height):
     if screenNum == 1:
