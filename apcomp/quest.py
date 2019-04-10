@@ -22,8 +22,8 @@ CHAR_VEL = 1
 MONS_X = 50
 MONS_Y = 50
 MONS_VEL = 1
-MONS_WIDTH = 40
-MONS_HEIGHT = 40
+MONS_WIDTH = 50
+MONS_HEIGHT = 50
 MOVE_1 = True
 
 #Door Stuff
@@ -66,6 +66,12 @@ BORDER_COLOR1 = (46,46,46,255)
 BORDER_COLOR2 = (74,74,74,255)
 BORDER_COLOR3 = (107,107,107,255)
 RED = (160, 20, 20, 2)
+ORANGE1 = (253, 189, 32, 255)
+ORANGE2 = (250, 124, 2, 255)
+ORANGE3 = (157, 153, 142, 255)
+MONS1 = (128,127,122, 255)
+MONS2 = (54, 54, 46, 255)
+MONS3 = (41, 39, 27, 255)
 
 #Pictures
 floor = pygame.image.load('dungeon_floor.jpg')
@@ -82,6 +88,10 @@ mother = pygame.image.load('mother.png').convert_alpha()
 mother = pygame.transform.scale(mother, (300, 300)).convert_alpha()
 mons_image = pygame.image.load('octopus.png')
 mons_image = pygame.transform.scale(mons_image, (MONS_WIDTH, MONS_HEIGHT)).convert_alpha()
+teller = pygame.image.load('fortune_teller.png')
+teller = pygame.transform.scale(teller, (300, 350)).convert_alpha()
+flame = pygame.image.load('flame.png').convert_alpha()
+flame = pygame.transform.scale(flame, (100, 100)).convert_alpha()
 
 
 #Audio
@@ -191,6 +201,10 @@ class Character(pygame.sprite.Sprite):
         global SCREEN_NUM
         self.x, self.y, SCREEN_NUM = screenWrap(SCREEN_NUM, self.x, self.y, self.width, self.height)
         time.sleep(0.002)
+    def win(self):
+        if detectCollide(self.x, self.y, self.width, self.height, ORANGE1, ORANGE2, ORANGE3):
+            global SCREEN_NUM
+            SCREEN_NUM = 30
 
 char1 = Character(CHAR_WIDTH, CHAR_HEIGHT, CHAR_X, CHAR_Y, CHAR_VEL, char_image)
 
@@ -229,6 +243,7 @@ class Monster(pygame.sprite.Sprite):
             MOVE_1 = False
         else:
             MOVE_1 = True
+        
             
 mons1 = Monster(MONS_X, MONS_Y, MONS_WIDTH, MONS_HEIGHT, MONS_VEL, mons_image)
 
@@ -258,6 +273,32 @@ def displayScreen(screenNum):
         keys = pygame.key.get_pressed()
         global SCREEN_NUM
         if keys[pygame.K_SPACE]:
+            SCREEN_NUM = 28
+    if screenNum == 28:
+        screen.fill((0,0,0))
+        screen.blit(teller, (150, 300))
+        message_display('You have begun to give up all hope.', WIDTH/2, 30)
+        message_display('But then, a mystical woman walks into', WIDTH/2, 80)
+        message_display('your house. She looks at your mother', WIDTH/2, 130)
+        message_display('and says that her only hope is to ', WIDTH/2, 180)
+        message_display('find the sacred flame of the octopi.', WIDTH/2, 230)
+        message_display('Press z to continue.', WIDTH/2, 280)
+        keys = pygame.key.get_pressed()
+        global SCREEN_NUM
+        if keys[pygame.K_z]:
+            SCREEN_NUM = 29
+    if screenNum == 29:
+        screen.fill((0,0,0))
+        screen.blit(teller, (150, 300))
+        message_display('"To do so, you must first find their', WIDTH/2, 30)
+        message_display('scared cave," She says. "But be ', WIDTH/2, 80)
+        message_display('careful, for they will protect the', WIDTH/2, 130)
+        message_display('flame with their lives. I wish you', WIDTH/2, 180)
+        message_display('the best of luck, adventurer..."', WIDTH/2, 230)
+        message_display('Press space to continue.', WIDTH/2, 280)
+        keys = pygame.key.get_pressed()
+        global SCREEN_NUM
+        if keys[pygame.K_SPACE]:
             SCREEN_NUM = 1
     if screenNum == 1:
         screen.blit (wall, (0,0))
@@ -280,10 +321,10 @@ def displayScreen(screenNum):
         botDoor()
         leftDoor()
         char1.move()
-        mons1.move()
-        char1.draw(screen)
+        #mons1.move()
+        print screen.get_at((char1.x-1, char1.y-1))
         mons1.draw(screen)
-        
+        char1.draw(screen)
     if screenNum == 3:
         screen.blit (wall, (0,0))
         screen.blit (floor, (BORDER_Y, BORDER_X))
@@ -373,8 +414,10 @@ def displayScreen(screenNum):
         screen.blit (wall, (0,0))
         screen.blit (floor, (BORDER_Y, BORDER_X))
         botDoor()
+        screen.blit (flame, (275, 275))
         char1.move()
         char1.draw(screen)
+        char1.win()
     if screenNum == 16:
         screen.blit (wall, (0,0))
         screen.blit (floor, (BORDER_Y, BORDER_X))
@@ -461,6 +504,8 @@ def displayScreen(screenNum):
         topDoor()
         char1.move()
         char1.draw(screen)
+    if screenNum == 30:
+        message_display('You Win!', 150, 300)
         
 def screenChange(screenNum, x, y, width, height):
     if screenNum == 1:
