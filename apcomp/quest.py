@@ -69,9 +69,7 @@ RED = (160, 20, 20, 2)
 ORANGE1 = (253, 189, 32, 255)
 ORANGE2 = (250, 124, 2, 255)
 ORANGE3 = (157, 153, 142, 255)
-MONS1 = (128,127,122, 255)
-MONS2 = (54, 54, 46, 255)
-MONS3 = (41, 39, 27, 255)
+MONS_COLOR = (140, 179, 237, 255)
 
 #Pictures
 floor = pygame.image.load('dungeon_floor.jpg')
@@ -153,8 +151,8 @@ def keyMoveX(x,y,width,height,vel,color1, color2 = None, color3 = None, image = 
     return x, rotation
 
 
-def detectCollide(x, y, width, height, color1, color2 = None, color3 = None):
-    if tuple(screen.get_at((x, y))) == color1 or tuple(screen.get_at((x+width, y+height))) == color1 or tuple(screen.get_at((x+width, y))) == color1 or tuple(screen.get_at((x, y+height))) == color1 or tuple(screen.get_at((x+width/2, y))) == color1 or tuple(screen.get_at((x, y+height/2))) == color1 or tuple(screen.get_at((x + width, y+height/2))) == color1 or tuple(screen.get_at((x+width/2, y+height))) == color1 or tuple(screen.get_at((x, y))) == color2 or tuple(screen.get_at((x+width, y+height))) == color2 or tuple(screen.get_at((x+width, y))) == color2 or tuple(screen.get_at((x, y+height))) == color2 or tuple(screen.get_at((x+width/2, y))) == color2 or tuple(screen.get_at((x, y+height/2))) == color2 or tuple(screen.get_at((x + width, y+height/2))) == color2 or tuple(screen.get_at((x+width/2, y+height))) == color2 or tuple(screen.get_at((x, y))) == color3 or tuple(screen.get_at((x+width, y+height))) == color3 or tuple(screen.get_at((x+width, y))) == color3 or tuple(screen.get_at((x, y+height))) == color3 or tuple(screen.get_at((x+width/2, y))) == color3 or tuple(screen.get_at((x, y+height/2))) == color3 or tuple(screen.get_at((x + width, y+height/2))) == color3 or tuple(screen.get_at((x+width/2, y+height))) == color3:
+def detectCollide(x, y, width, height, color1, color2 = None, color3 = None, color4 = None, color5 = None):
+    if tuple(screen.get_at((x, y))) == color1 or tuple(screen.get_at((x+width, y+height))) == color1 or tuple(screen.get_at((x+width, y))) == color1 or tuple(screen.get_at((x, y+height))) == color1 or tuple(screen.get_at((x+width/2, y))) == color1 or tuple(screen.get_at((x, y+height/2))) == color1 or tuple(screen.get_at((x + width, y+height/2))) == color1 or tuple(screen.get_at((x+width/2, y+height))) == color1 or tuple(screen.get_at((x, y))) == color2 or tuple(screen.get_at((x+width, y+height))) == color2 or tuple(screen.get_at((x+width, y))) == color2 or tuple(screen.get_at((x, y+height))) == color2 or tuple(screen.get_at((x+width/2, y))) == color2 or tuple(screen.get_at((x, y+height/2))) == color2 or tuple(screen.get_at((x + width, y+height/2))) == color2 or tuple(screen.get_at((x+width/2, y+height))) == color2 or tuple(screen.get_at((x, y))) == color3 or tuple(screen.get_at((x+width, y+height))) == color3 or tuple(screen.get_at((x+width, y))) == color3 or tuple(screen.get_at((x, y+height))) == color3 or tuple(screen.get_at((x+width/2, y))) == color3 or tuple(screen.get_at((x, y+height/2))) == color3 or tuple(screen.get_at((x + width, y+height/2))) == color3 or tuple(screen.get_at((x+width/2, y+height))) == color3 or tuple(screen.get_at((x, y))) == color4 or tuple(screen.get_at((x+width, y+height))) == color4 or tuple(screen.get_at((x+width, y))) == color4 or tuple(screen.get_at((x, y+height))) == color4 or tuple(screen.get_at((x+width/2, y))) == color4 or tuple(screen.get_at((x, y+height/2))) == color4 or tuple(screen.get_at((x + width, y+height/2))) == color4 or tuple(screen.get_at((x+width/2, y+height))) == color4 or tuple(screen.get_at((x, y))) == color5 or tuple(screen.get_at((x+width, y+height))) == color5 or tuple(screen.get_at((x+width, y))) == color5 or tuple(screen.get_at((x, y+height))) == color5 or tuple(screen.get_at((x+width/2, y))) == color5 or tuple(screen.get_at((x, y+height/2))) == color5 or tuple(screen.get_at((x + width, y+height/2))) == color5 or tuple(screen.get_at((x+width/2, y+height))) == color5:
         return True
     else:
         return False
@@ -201,6 +199,10 @@ class Character(pygame.sprite.Sprite):
         global SCREEN_NUM
         self.x, self.y, SCREEN_NUM = screenWrap(SCREEN_NUM, self.x, self.y, self.width, self.height)
         time.sleep(0.002)
+    def hit(self):
+        if detectCollide(self.x, self.y, self.width, self.height, MONS_COLOR):
+            global SCREEN_NUM
+            SCREEN_NUM = 31
     def win(self):
         if detectCollide(self.x, self.y, self.width, self.height, ORANGE1, ORANGE2, ORANGE3):
             global SCREEN_NUM
@@ -235,11 +237,11 @@ class Monster(pygame.sprite.Sprite):
             if self.y < char1.y:
                 self.y = down(self.y, self.vel)
                 if detectCollide(self.x,self.y,self.width,self.height,BORDER_COLOR1,BORDER_COLOR2,BORDER_COLOR3):
-                    self.x = up(self.x,self.vel)
+                    self.y = up(self.y,self.vel)
             else:
                 self.y = up(self.y, self.vel)
                 if detectCollide(self.x,self.y,self.width,self.height,BORDER_COLOR1,BORDER_COLOR2,BORDER_COLOR3):
-                    self.x = down(self.x,self.vel)
+                    self.y = down(self.y,self.vel)
             MOVE_1 = False
         else:
             MOVE_1 = True
@@ -304,6 +306,8 @@ def displayScreen(screenNum):
         screen.blit (wall, (0,0))
         screen.blit (floor, (BORDER_Y, BORDER_X))
         topDoor()
+        screen.blit (pillar, (175, 300))
+        screen.blit (pillar, (400, 300))
         char1.move()
         char1.draw(screen)
         message_display('Use WASD or', 150, 60)
@@ -320,11 +324,13 @@ def displayScreen(screenNum):
         topDoor()
         botDoor()
         leftDoor()
+        screen.blit (pillar, (175, 300))
+        screen.blit (pillar, (400, 300))
         char1.move()
-        #mons1.move()
-        print screen.get_at((char1.x-1, char1.y-1))
+        mons1.move()
         mons1.draw(screen)
         char1.draw(screen)
+        char1.hit()
     if screenNum == 3:
         screen.blit (wall, (0,0))
         screen.blit (floor, (BORDER_Y, BORDER_X))
@@ -332,6 +338,7 @@ def displayScreen(screenNum):
         rightDoor()
         char1.move()
         char1.draw(screen)
+        char1.hit()
     if screenNum == 4:
         screen.blit (wall, (0,0))
         screen.blit (floor, (BORDER_Y, BORDER_X))
@@ -339,6 +346,7 @@ def displayScreen(screenNum):
         rightDoor()
         char1.move()
         char1.draw(screen)
+        char1.hit()
     if screenNum == 5:
         screen.blit (wall, (0,0))
         screen.blit (floor, (BORDER_Y, BORDER_X))
@@ -346,6 +354,7 @@ def displayScreen(screenNum):
         topDoor()
         char1.move()
         char1.draw(screen)
+        char1.hit()
     if screenNum == 6:
         screen.blit (wall, (0,0))
         screen.blit (floor, (BORDER_Y, BORDER_X))
@@ -353,6 +362,7 @@ def displayScreen(screenNum):
         rightDoor()
         char1.move()
         char1.draw(screen)
+        char1.hit()
     if screenNum == 7:
         screen.blit (wall, (0,0))
         screen.blit (floor, (BORDER_Y, BORDER_X))
@@ -360,6 +370,7 @@ def displayScreen(screenNum):
         leftDoor()
         char1.move()
         char1.draw(screen)
+        char1.hit()
     if screenNum == 8:
         screen.blit (wall, (0,0))
         screen.blit (floor, (BORDER_Y, BORDER_X))
@@ -368,6 +379,7 @@ def displayScreen(screenNum):
         topDoor()
         char1.move()
         char1.draw(screen)
+        char1.hit()
     if screenNum == 9:
         screen.blit (wall, (0,0))
         screen.blit (floor, (BORDER_Y, BORDER_X))
@@ -375,6 +387,7 @@ def displayScreen(screenNum):
         leftDoor()
         char1.move()
         char1.draw(screen)
+        char1.hit()
     if screenNum == 10:
         screen.blit (wall, (0,0))
         screen.blit (floor, (BORDER_Y, BORDER_X))
@@ -382,6 +395,7 @@ def displayScreen(screenNum):
         rightDoor()
         char1.move()
         char1.draw(screen)
+        char1.hit()
     if screenNum == 11:
         screen.blit (wall, (0,0))
         screen.blit (floor, (BORDER_Y, BORDER_X))
@@ -389,6 +403,7 @@ def displayScreen(screenNum):
         rightDoor()
         char1.move()
         char1.draw(screen)
+        char1.hit()
     if screenNum == 12:
         screen.blit (wall, (0,0))
         screen.blit (floor, (BORDER_Y, BORDER_X))
@@ -396,6 +411,7 @@ def displayScreen(screenNum):
         rightDoor()
         char1.move()
         char1.draw(screen)
+        char1.hit()
     if screenNum == 13:
         screen.blit (wall, (0,0))
         screen.blit (floor, (BORDER_Y, BORDER_X))
@@ -404,12 +420,14 @@ def displayScreen(screenNum):
         leftDoor()
         char1.move()
         char1.draw(screen)
+        char1.hit()
     if screenNum == 14:
         screen.blit (wall, (0,0))
         screen.blit (floor, (BORDER_Y, BORDER_X))
         leftDoor()
         char1.move()
         char1.draw(screen)
+        char1.hit()
     if screenNum == 15:
         screen.blit (wall, (0,0))
         screen.blit (floor, (BORDER_Y, BORDER_X))
@@ -417,6 +435,7 @@ def displayScreen(screenNum):
         screen.blit (flame, (275, 275))
         char1.move()
         char1.draw(screen)
+        char1.hit()
         char1.win()
     if screenNum == 16:
         screen.blit (wall, (0,0))
@@ -425,6 +444,7 @@ def displayScreen(screenNum):
         rightDoor()
         char1.move()
         char1.draw(screen)
+        char1.hit()
     if screenNum == 17:
         screen.blit (wall, (0,0))
         screen.blit (floor, (BORDER_Y, BORDER_X))
@@ -433,6 +453,7 @@ def displayScreen(screenNum):
         leftDoor()
         char1.move()
         char1.draw(screen)
+        char1.hit()
     if screenNum == 18:
         screen.blit (wall, (0,0))
         screen.blit (floor, (BORDER_Y, BORDER_X))
@@ -441,12 +462,14 @@ def displayScreen(screenNum):
         leftDoor()
         char1.move()
         char1.draw(screen)
+        char1.hit()
     if screenNum == 19:
         screen.blit (wall, (0,0))
         screen.blit (floor, (BORDER_Y, BORDER_X))
         topDoor()
         char1.move()
         char1.draw(screen)
+        char1.hit()
     if screenNum == 20:
         screen.blit (wall, (0,0))
         screen.blit (floor, (BORDER_Y, BORDER_X))
@@ -454,6 +477,7 @@ def displayScreen(screenNum):
         leftDoor()
         char1.move()
         char1.draw(screen)
+        char1.hit()
     if screenNum == 21:
         screen.blit (wall, (0,0))
         screen.blit (floor, (BORDER_Y, BORDER_X))
@@ -461,6 +485,7 @@ def displayScreen(screenNum):
         topDoor()
         char1.move()
         char1.draw(screen)
+        char1.hit()
     if screenNum == 22:
         screen.blit (wall, (0,0))
         screen.blit (floor, (BORDER_Y, BORDER_X))
@@ -468,6 +493,7 @@ def displayScreen(screenNum):
         leftDoor()
         char1.move()
         char1.draw(screen)
+        char1.hit()
     if screenNum == 23:
         screen.blit (wall, (0,0))
         screen.blit (floor, (BORDER_Y, BORDER_X))
@@ -476,12 +502,14 @@ def displayScreen(screenNum):
         rightDoor()
         char1.move()
         char1.draw(screen)
+        char1.hit()
     if screenNum == 24:
         screen.blit (wall, (0,0))
         screen.blit (floor, (BORDER_Y, BORDER_X))
         botDoor()
         char1.move()
         char1.draw(screen)
+        char1.hit()
     if screenNum == 25:
         screen.blit (wall, (0,0))
         screen.blit (floor, (BORDER_Y, BORDER_X))
@@ -490,6 +518,7 @@ def displayScreen(screenNum):
         leftDoor()
         char1.move()
         char1.draw(screen)
+        char1.hit()
     if screenNum == 26:
         screen.blit (wall, (0,0))
         screen.blit (floor, (BORDER_Y, BORDER_X))
@@ -497,6 +526,7 @@ def displayScreen(screenNum):
         rightDoor()
         char1.move()
         char1.draw(screen)
+        char1.hit()
     if screenNum == 27:
         screen.blit (wall, (0,0))
         screen.blit (floor, (BORDER_Y, BORDER_X))
@@ -504,8 +534,13 @@ def displayScreen(screenNum):
         topDoor()
         char1.move()
         char1.draw(screen)
+        char1.hit()
     if screenNum == 30:
+        screen.fill((0,0,0,255))
         message_display('You Win!', 150, 300)
+    if screenNum == 31:
+        screen.fill((0,0,0,255))
+        message_display('GAME OVER', 300, 300)
         
 def screenChange(screenNum, x, y, width, height):
     if screenNum == 1:
