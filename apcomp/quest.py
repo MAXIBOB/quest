@@ -75,7 +75,7 @@ MONS_COLOR = (140, 179, 237, 255)
 floor = pygame.image.load('dungeon_floor.jpg')
 floor = pygame.transform.scale(floor, (WIDTH-BORDER_X*2, HEIGHT-BORDER_Y*2)).convert()
 wall = pygame.image.load('dungeon_wall.png')
-pillar = pygame.transform.scale(wall, (75, 75)).convert_alpha()
+pillar = pygame.transform.scale(wall, (50, 50)).convert_alpha()
 wall = pygame.transform.scale(wall, (WIDTH, HEIGHT)).convert()
 door = pygame.image.load('door.png')
 doorVert = pygame.transform.scale(door, (DOOR_WIDTH,DOOR_HEIGHT)).convert_alpha()
@@ -248,6 +248,33 @@ class Monster(pygame.sprite.Sprite):
         
             
 mons1 = Monster(MONS_X, MONS_Y, MONS_WIDTH, MONS_HEIGHT, MONS_VEL, mons_image)
+mons2 = Monster(MONS_X, MONS_Y, MONS_WIDTH, MONS_HEIGHT, MONS_VEL, mons_image)
+mons3 = Monster(MONS_X, MONS_Y, MONS_WIDTH, MONS_HEIGHT, MONS_VEL, mons_image)
+mons4 = Monster(MONS_X, MONS_Y, MONS_WIDTH, MONS_HEIGHT, MONS_VEL, mons_image)
+mons5 = Monster(MONS_X, MONS_Y, MONS_WIDTH, MONS_HEIGHT, MONS_VEL, mons_image)
+mons6 = Monster(MONS_X, MONS_Y, MONS_WIDTH, MONS_HEIGHT, MONS_VEL, mons_image)
+mons7 = Monster(MONS_X, MONS_Y, MONS_WIDTH, MONS_HEIGHT, MONS_VEL, mons_image)
+mons8 = Monster(MONS_X, MONS_Y, MONS_WIDTH, MONS_HEIGHT, MONS_VEL, mons_image)
+mons9 = Monster(MONS_X, MONS_Y, MONS_WIDTH, MONS_HEIGHT, MONS_VEL, mons_image)
+mons10 = Monster(MONS_X, MONS_Y, MONS_WIDTH, MONS_HEIGHT, MONS_VEL, mons_image)
+mons11 = Monster(MONS_X, MONS_Y, MONS_WIDTH, MONS_HEIGHT, MONS_VEL, mons_image)
+mons12 = Monster(MONS_X, MONS_Y, MONS_WIDTH, MONS_HEIGHT, MONS_VEL, mons_image)
+mons13 = Monster(MONS_X, MONS_Y, MONS_WIDTH, MONS_HEIGHT, MONS_VEL, mons_image)
+mons14 = Monster(MONS_X, MONS_Y, MONS_WIDTH, MONS_HEIGHT, MONS_VEL, mons_image)
+mons15 = Monster(MONS_X, MONS_Y, MONS_WIDTH, MONS_HEIGHT, MONS_VEL, mons_image)
+mons16 = Monster(MONS_X, MONS_Y, MONS_WIDTH, MONS_HEIGHT, MONS_VEL, mons_image)
+mons17 = Monster(MONS_X, MONS_Y, MONS_WIDTH, MONS_HEIGHT, MONS_VEL, mons_image)
+mons18 = Monster(MONS_X, MONS_Y, MONS_WIDTH, MONS_HEIGHT, MONS_VEL, mons_image)
+mons19 = Monster(MONS_X, MONS_Y, MONS_WIDTH, MONS_HEIGHT, MONS_VEL, mons_image)
+mons20 = Monster(MONS_X, MONS_Y, MONS_WIDTH, MONS_HEIGHT, MONS_VEL, mons_image)
+mons21 = Monster(MONS_X, MONS_Y, MONS_WIDTH, MONS_HEIGHT, MONS_VEL, mons_image)
+mons22 = Monster(MONS_X, MONS_Y, MONS_WIDTH, MONS_HEIGHT, MONS_VEL, mons_image)
+mons23 = Monster(MONS_X, MONS_Y, MONS_WIDTH, MONS_HEIGHT, MONS_VEL, mons_image)
+mons24 = Monster(MONS_X, MONS_Y, MONS_WIDTH, MONS_HEIGHT, MONS_VEL, mons_image)
+mons25 = Monster(MONS_X, MONS_Y, MONS_WIDTH, MONS_HEIGHT, MONS_VEL, mons_image)
+mons26 = Monster(MONS_X, MONS_Y, MONS_WIDTH, MONS_HEIGHT, MONS_VEL, mons_image)
+mons27 = Monster(MONS_X, MONS_Y, MONS_WIDTH, MONS_HEIGHT, MONS_VEL, mons_image)
+
 
 #Door Stuff
 def topDoor():
@@ -324,6 +351,8 @@ def displayScreen(screenNum):
         topDoor()
         botDoor()
         leftDoor()
+        message_display('Avoid the', 150, 60)
+        message_display('evil octopi!', 150, 90)
         screen.blit (pillar, (175, 300))
         screen.blit (pillar, (400, 300))
         char1.move()
@@ -337,6 +366,8 @@ def displayScreen(screenNum):
         botDoor()
         rightDoor()
         char1.move()
+        mons2.move()
+        mons2.draw(screen)
         char1.draw(screen)
         char1.hit()
     if screenNum == 4:
@@ -345,6 +376,8 @@ def displayScreen(screenNum):
         topDoor()
         rightDoor()
         char1.move()
+        mons3.move()
+        mons3.draw(screen)
         char1.draw(screen)
         char1.hit()
     if screenNum == 5:
@@ -353,6 +386,8 @@ def displayScreen(screenNum):
         botDoor()
         topDoor()
         char1.move()
+        mons4.move()
+        mons4.draw(screen)
         char1.draw(screen)
         char1.hit()
     if screenNum == 6:
@@ -361,6 +396,8 @@ def displayScreen(screenNum):
         botDoor()
         rightDoor()
         char1.move()
+        mons5.move()
+        mons5.draw(screen)
         char1.draw(screen)
         char1.hit()
     if screenNum == 7:
@@ -369,6 +406,8 @@ def displayScreen(screenNum):
         topDoor()
         leftDoor()
         char1.move()
+        mons6.move()
+        mons6.draw(screen)
         char1.draw(screen)
         char1.hit()
     if screenNum == 8:
@@ -378,6 +417,8 @@ def displayScreen(screenNum):
         rightDoor()
         topDoor()
         char1.move()
+        mons7.move()
+        mons7.draw(screen)
         char1.draw(screen)
         char1.hit()
     if screenNum == 9:
@@ -386,6 +427,8 @@ def displayScreen(screenNum):
         botDoor()
         leftDoor()
         char1.move()
+        mons8.move()
+        mons8.draw(screen)
         char1.draw(screen)
         char1.hit()
     if screenNum == 10:
@@ -394,6 +437,8 @@ def displayScreen(screenNum):
         topDoor()
         rightDoor()
         char1.move()
+        mons9.move()
+        mons9.draw(screen)
         char1.draw(screen)
         char1.hit()
     if screenNum == 11:
@@ -402,6 +447,8 @@ def displayScreen(screenNum):
         botDoor()
         rightDoor()
         char1.move()
+        mons10.move()
+        mons10.draw(screen)
         char1.draw(screen)
         char1.hit()
     if screenNum == 12:
@@ -410,6 +457,8 @@ def displayScreen(screenNum):
         leftDoor()
         rightDoor()
         char1.move()
+        mons11.move()
+        mons11.draw(screen)
         char1.draw(screen)
         char1.hit()
     if screenNum == 13:
@@ -419,6 +468,8 @@ def displayScreen(screenNum):
         rightDoor()
         leftDoor()
         char1.move()
+        mons12.move()
+        mons12.draw(screen)
         char1.draw(screen)
         char1.hit()
     if screenNum == 14:
@@ -426,6 +477,8 @@ def displayScreen(screenNum):
         screen.blit (floor, (BORDER_Y, BORDER_X))
         leftDoor()
         char1.move()
+        mons13.move()
+        mons13.draw(screen)
         char1.draw(screen)
         char1.hit()
     if screenNum == 15:
@@ -434,6 +487,8 @@ def displayScreen(screenNum):
         botDoor()
         screen.blit (flame, (275, 275))
         char1.move()
+        mons14.move()
+        mons14.draw(screen)
         char1.draw(screen)
         char1.hit()
         char1.win()
@@ -443,6 +498,8 @@ def displayScreen(screenNum):
         leftDoor()
         rightDoor()
         char1.move()
+        mons15.move()
+        mons15.draw(screen)
         char1.draw(screen)
         char1.hit()
     if screenNum == 17:
@@ -452,7 +509,9 @@ def displayScreen(screenNum):
         rightDoor()
         leftDoor()
         char1.move()
-        char1.draw(screen)
+        mons1.move()
+        mons16.draw(screen)
+        char16.draw(screen)
         char1.hit()
     if screenNum == 18:
         screen.blit (wall, (0,0))
@@ -461,6 +520,8 @@ def displayScreen(screenNum):
         rightDoor()
         leftDoor()
         char1.move()
+        mons17.move()
+        mons17.draw(screen)
         char1.draw(screen)
         char1.hit()
     if screenNum == 19:
@@ -468,6 +529,8 @@ def displayScreen(screenNum):
         screen.blit (floor, (BORDER_Y, BORDER_X))
         topDoor()
         char1.move()
+        mons18.move()
+        mons18.draw(screen)
         char1.draw(screen)
         char1.hit()
     if screenNum == 20:
@@ -476,6 +539,8 @@ def displayScreen(screenNum):
         topDoor()
         leftDoor()
         char1.move()
+        mons19.move()
+        mons19.draw(screen)
         char1.draw(screen)
         char1.hit()
     if screenNum == 21:
@@ -484,6 +549,8 @@ def displayScreen(screenNum):
         botDoor()
         topDoor()
         char1.move()
+        mons20.move()
+        mons20.draw(screen)
         char1.draw(screen)
         char1.hit()
     if screenNum == 22:
@@ -492,6 +559,8 @@ def displayScreen(screenNum):
         botDoor()
         leftDoor()
         char1.move()
+        mons21.move()
+        mons21.draw(screen)
         char1.draw(screen)
         char1.hit()
     if screenNum == 23:
@@ -501,6 +570,8 @@ def displayScreen(screenNum):
         leftDoor()
         rightDoor()
         char1.move()
+        mons22.move()
+        mons22.draw(screen)
         char1.draw(screen)
         char1.hit()
     if screenNum == 24:
@@ -508,6 +579,8 @@ def displayScreen(screenNum):
         screen.blit (floor, (BORDER_Y, BORDER_X))
         botDoor()
         char1.move()
+        mons23.move()
+        mons23.draw(screen)
         char1.draw(screen)
         char1.hit()
     if screenNum == 25:
@@ -517,6 +590,8 @@ def displayScreen(screenNum):
         rightDoor()
         leftDoor()
         char1.move()
+        mons24.move()
+        mons24.draw(screen)
         char1.draw(screen)
         char1.hit()
     if screenNum == 26:
@@ -525,6 +600,8 @@ def displayScreen(screenNum):
         leftDoor()
         rightDoor()
         char1.move()
+        mons25.move()
+        mons25.draw(screen)
         char1.draw(screen)
         char1.hit()
     if screenNum == 27:
@@ -533,6 +610,8 @@ def displayScreen(screenNum):
         botDoor()
         topDoor()
         char1.move()
+        mons26.move()
+        mons26.draw(screen)
         char1.draw(screen)
         char1.hit()
     if screenNum == 30:
