@@ -200,7 +200,7 @@ class Character(pygame.sprite.Sprite):
         self.x, self.y, SCREEN_NUM = screenWrap(SCREEN_NUM, self.x, self.y, self.width, self.height)
         time.sleep(0.002)
     def hit(self):
-        if detectCollide(self.x, self.y, self.width, self.height, MONS_COLOR):
+        if detectCollide(self.x, self.y, self.width-20, self.height-20, MONS_COLOR):
             global SCREEN_NUM
             SCREEN_NUM = 31
     def win(self):
@@ -248,7 +248,7 @@ class Monster(pygame.sprite.Sprite):
         
             
 mons1 = Monster(MONS_X, MONS_Y, MONS_WIDTH, MONS_HEIGHT, MONS_VEL, mons_image)
-mons2 = Monster(MONS_X, MONS_Y, MONS_WIDTH, MONS_HEIGHT, MONS_VEL, mons_image)
+mons2 = Monster(400, 400, MONS_WIDTH, MONS_HEIGHT, MONS_VEL, mons_image)
 mons3 = Monster(MONS_X, MONS_Y, MONS_WIDTH, MONS_HEIGHT, MONS_VEL, mons_image)
 mons4 = Monster(MONS_X, MONS_Y, MONS_WIDTH, MONS_HEIGHT, MONS_VEL, mons_image)
 mons5 = Monster(MONS_X, MONS_Y, MONS_WIDTH, MONS_HEIGHT, MONS_VEL, mons_image)
@@ -365,6 +365,8 @@ def displayScreen(screenNum):
         screen.blit (floor, (BORDER_Y, BORDER_X))
         botDoor()
         rightDoor()
+        screen.blit (pillar, (100, 400))
+        screen.blit (pillar, (450, 200))
         char1.move()
         mons2.move()
         mons2.draw(screen)
@@ -497,6 +499,7 @@ def displayScreen(screenNum):
         screen.blit (floor, (BORDER_Y, BORDER_X))
         leftDoor()
         rightDoor()
+        screen.blit (pillar, (WIDTH/2, HEIGHT/2))
         char1.move()
         mons15.move()
         mons15.draw(screen)
@@ -509,9 +512,9 @@ def displayScreen(screenNum):
         rightDoor()
         leftDoor()
         char1.move()
-        mons1.move()
+        mons16.move()
         mons16.draw(screen)
-        char16.draw(screen)
+        char1.draw(screen)
         char1.hit()
     if screenNum == 18:
         screen.blit (wall, (0,0))
